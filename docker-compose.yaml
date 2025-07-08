@@ -1,0 +1,38 @@
+services:
+  victorialogs:
+    image: victoriametrics/victoria-logs:latest
+    container_name: victorialogs
+    restart: unless-stopped
+    ports:
+      - "9428:9428"
+    volumes:
+      - victoria_logs_data:/storage
+    command:
+      - --httpListenAddr=:9428
+      - --storageDataPath=/storage
+    networks:
+      - monitoring_network
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - victorialogs
+    networks:
+      - monitoring_network
+
+volumes:
+  victoria_logs_data:
+  grafana_data:
+
+networks:
+  monitoring_network:
+    driver: bridge
