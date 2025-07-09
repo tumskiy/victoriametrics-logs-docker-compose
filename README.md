@@ -7,18 +7,11 @@
 docker compose up -d
 ```
  Access the services:
-```
+ 
 Grafana: http://localhost:3000 (admin/admin)
-```
-```
+
 VictoriaLogs API: http://localhost:9428
-```
-ENV
-```yaml
- environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
-```
+
 
 ## Setting Up Grafana
 
